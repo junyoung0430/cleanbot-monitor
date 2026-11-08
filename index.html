@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CleanBot Monitor - 청소로봇 상태 모니터링 대시보드</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 상단 머리말 -->
+  <header class="header">
+    <div class="header-inner">
+      <div>
+        <h1>CleanBot Monitor</h1>
+        <p class="subtitle">청소로봇 상태 모니터링 &amp; 유지보수 알림 대시보드</p>
+      </div>
+      <p class="updated">마지막 갱신: <span id="updated-time"></span></p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 1. 요약: 전체 / 정상 / 주의 / 오류 대수 -->
+    <section class="summary" id="summary"></section>
+
+    <!-- 2. 유지보수 알림 -->
+    <section class="panel">
+      <h2>유지보수 알림</h2>
+      <ul class="alert-list" id="alert-list"></ul>
+    </section>
+
+    <!-- 3. 로봇 카드 목록 -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>로봇 목록</h2>
+        <div class="filter" id="status-filter">
+          <button class="filter-btn active" data-status="all">전체</button>
+          <button class="filter-btn" data-status="정상">정상</button>
+          <button class="filter-btn" data-status="주의">주의</button>
+          <button class="filter-btn" data-status="오류">오류</button>
+        </div>
+      </div>
+      <p class="hint">카드를 누르면 아래에 해당 로봇의 배터리 그래프가 나옵니다.</p>
+      <div class="robot-grid" id="robot-grid"></div>
+    </section>
+
+    <!-- 4. 선택한 로봇의 배터리 그래프 + 오류 코드 통계 -->
+    <div class="two-col">
+      <section class="panel">
+        <h2 id="chart-title">배터리 변화</h2>
+        <div class="chart-box"><canvas id="battery-chart"></canvas></div>
+      </section>
+      <section class="panel">
+        <h2>오류 코드별 발생 횟수 (최근 7일)</h2>
+        <div class="chart-box"><canvas id="error-chart"></canvas></div>
+      </section>
+    </div>
+
+    <!-- 5. 오류 기록 표 -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>오류 기록</h2>
+        <select id="log-filter" class="select">
+          <option value="all">전체 로봇</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="log-table">
+          <thead>
+            <tr>
+              <th>발생 시간</th>
+              <th>로봇</th>
+              <th>오류 코드</th>
+              <th>내용</th>
+              <th>처리 상태</th>
+            </tr>
+          </thead>
+          <tbody id="log-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    개인 학습용 포트폴리오 프로젝트 · 모든 데이터는 가상으로 만든 것입니다.
+  </footer>
+
+  <!-- 그래프 라이브러리 Chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <!-- 가상 데이터 → 화면 동작 순서로 불러옵니다 -->
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
